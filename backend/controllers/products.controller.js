@@ -6,6 +6,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 const createProduct = asyncHandler(
     async (req,res,next) => {
         const { name, description, price, category, size, color, stock, image } = req.body;
+        console.log("req body ", req.body)
         if(
             [name, description, price, category, size, color, stock, image].some((field)=>{
                 return field === '';
@@ -116,7 +117,7 @@ const updateProduct = asyncHandler(
                 "id is required"
             )
         }
-
+        console.log("req body ", req.body);
         const update = await Product.findByIdAndUpdate(
             {_id : id},
             {
@@ -127,6 +128,8 @@ const updateProduct = asyncHandler(
             }
         )
 
+        console.log("update ", update)
+
         if(
             !update
         ) {
@@ -136,11 +139,13 @@ const updateProduct = asyncHandler(
             )
         }
 
-        res.status(
-            200,
-            "update product ",
-            update 
-        )
+         res.status(200).json(
+            new ApiResponse(
+                200,
+                "Product updated successfully",
+                update
+            )
+        );
     }
 )
 
@@ -157,6 +162,7 @@ const deleteProduct = asyncHandler(
         }
 
         const deletep = await Product.findByIdAndDelete({_id: id});
+        console.log("deletep ", deletep)
 
         if(
             !deletep
@@ -167,14 +173,13 @@ const deleteProduct = asyncHandler(
             )
         }
 
-        res.status(
-            200,
+         res.status(200).json(
             new ApiResponse(
                 200,
-                "product deleted successfully ",
-                deletep 
+                "Product deleted successfully",
+                deletep
             )
-        )
+        );
     }
 )
 

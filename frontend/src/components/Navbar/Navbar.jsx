@@ -1,79 +1,126 @@
-
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { removeUser } from '../../slice/userSlice';
 import { useLogoutUserMutation } from '../../services/user/userApi';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const sections = [
-    {
-        path:'/',
-        name:'Home'
-    },
-    {
-        path:'/about',
-        name:'About'
-    },
-    {
-        path:'/contact',
-        name:'Contact'
-    },
-    {
-        path:'/products',
-        name:'Product'
-    },
-    {
-        path:'/cart',
-        name:'Cart'
-    },
-]
+  {
+    path: '/',
+    name: 'Home'
+  },
+  {
+    path: '/about',
+    name: 'About'
+  },
+  {
+    path: '/contact',
+    name: 'Contact'
+  },
+  {
+    path: '/products',
+    name: 'Product'
+  },
+  {
+    path: '/cart',
+    name: 'Cart'
+  },
+];
 
 function Navbar() {
-    let user = useSelector(state => state.user);
-    user = user.user;
-    console.log("user data ", user);
+  let { user, isAuthenticated } = useAuth0();
+  const { logout } = useAuth0();
+  let User = useSelector(state => state.user);
+  User = User.user;
 
-    const [ logoutUser, {error, isLoading} ] = useLogoutUserMutation();
+  const [logoutUser] = useLogoutUserMutation();
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
-
-    const handleLogout = async () => {
-        dispatch(removeUser());
-        try {
-            const response = await logoutUser();
-            console.log("logout response ", response);
-        } catch (error) {
-            console.log("error occured while logout ", error.message);
-        }
+  const handleLogout = async () => {
+    dispatch(removeUser());
+    try {
+      await logoutUser();
+      logout({ logoutParams: { returnTo: window.location.origin } });
+    } catch (error) {
+      console.log("error occurred while logout ", error.message);
     }
+  };
+
+  if (isAuthenticated && !User) {
+    User = {
+      name: user.name,
+      email: user.email,
+      picture: user.picture
+    };
+    localStorage.setItem('user', JSON.stringify(User));
+  }
+
   return (
-    <nav className='h-[10vh] flex justify-around items-center bg-[#007BFF] text-white sticky top-0'> {/* #C70039 */}
-        <div>
-            <h1 className='font-bold text-2xl'>Product_Ecom</h1>
-        </div>
-        <ul className='flex gap-[1rem]'>
-            {sections.map((section, index) => {
-                return <Link to={section.path} key={index}>
-                    <li className='font-semibold'>{section.name}</li>
-                </Link>
-            })}
-            {
-                user && <button onClick={handleLogout} className='px-[1rem] py-[0.2rem] bg-purple-600 font-bold text-white'>logout</button>
-            }
-            {
-                !user && <div className='flex gap-[0.3rem]'>
-                    <button>
-                        <Link to='/signup' className='px-[1rem] py-[0.2rem] bg-purple-600 font-bold text-white'>Signup</Link>
-                    </button>
-                    <button>
-                        <Link to='/login' className='px-[1rem] py-[0.2rem] bg-purple-600 font-bold text-white'>Login</Link> 
-                    </button>
-                </div>
-                
-            }
-        </ul>
+    <nav className="h-20 flex justify-between items-center px-6 md:px-12 bg-gradient-to-r from-purple-700 to-indigo-800 text-white shadow-lg sticky top-0 z-50 rounded-b-lg">
+      <div>
+        <h1 className="font-bold text-3xl tracking-wide font-sans text-white">Product_Ecom</h1>
+      </div>
+      <ul className="flex items-center space-x-6">
+        {sections.map((section, index) => (
+          <Link to={section.path} key={index}>
+            <li className="font-semibold text-lg hover:text-purple-200 transition duration-300 transform hover:scale-105">
+              {section.name}
+            </li>
+          </Link>
+        ))}
+        {User && (
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleLogout}
+              className="px-6 py-2 bg-red-600 font-bold text-white rounded-full shadow-md hover:bg-red-700 transition transform hover:scale-105"
+            >
+              Logout
+            </button>
+            <div className="flex items-center gap-2">
+              {User.picture && (
+                <img
+                  src={User.picture}
+                  alt={User.name}
+                  className="h-10 w-10 rounded-full border-2 border-white shadow-sm"
+                />
+              )}
+              {User.name && <h2 className="text-lg font-semibold">{User.name}</h2>}
+            </div>
+          </div>
+        )}
+        {isAuthenticated && !User && (
+          <div className="flex gap-3">
+            <button
+              onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+              className="px-6 py-2 bg-red-600 font-bold text-white rounded-full shadow-md hover:bg-red-700 transition transform hover:scale-105"
+            >
+              Logout
+            </button>
+            <Link to="/login">
+              <button className="px-6 py-2 bg-purple-500 font-bold text-white rounded-full shadow-md hover:bg-purple-600 transition transform hover:scale-105">
+                Login
+              </button>
+            </Link>
+          </div>
+        )}
+        {!User && !isAuthenticated && (
+          <div className="flex gap-3">
+            <Link to="/signup">
+              <button className="px-6 py-2 bg-green-500 font-bold text-white rounded-full shadow-md hover:bg-green-600 transition transform hover:scale-105">
+                Signup
+              </button>
+            </Link>
+            <Link to="/login">
+              <button className="px-6 py-2 bg-purple-500 font-bold text-white rounded-full shadow-md hover:bg-purple-600 transition transform hover:scale-105">
+                Login
+              </button>
+            </Link>
+          </div>
+        )}
+      </ul>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useGetSpecificProductQuery } from '../services/product/productApi';
 import { addToCart } from '../slice/cartSlice';
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
 
 function SingleProducts() {
     const { id } = useParams();
@@ -15,8 +16,11 @@ function SingleProducts() {
     console.log("data ", data);
     const product = data?.data;
 
+    const notify = () => toast("Product Added To Cart Successfully!");
+
     const handleAddToCart = (product) => {
         dispatch(addToCart(product))
+        notify();
     }
 
     return (
@@ -32,7 +36,7 @@ function SingleProducts() {
                         id:product._id, name: product.name, image: product.image, description: product.description,price: product.price,
                         category: product.category
                     })}>
-                        <Link to={`/single-products/${product._id}`}>Add To Cart</Link>
+                        <Link>Add To Cart</Link>
                     </button>
                 </div>
             }

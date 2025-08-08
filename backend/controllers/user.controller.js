@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js"; 
+import { asyncHandler } from "../utils/asyncHandler.js";
 import bcrypt from 'bcryptjs'
 
 const tokenGenerate = async (userId) => {
@@ -11,138 +11,153 @@ const tokenGenerate = async (userId) => {
 }
 
 const registerUser = asyncHandler(
-    async(req,res,next) => {
+    async (req, res, next) => {
         const { username, email, password } = req.body;
 
-        if(
-            [username, email, password].some((field)=>{
+        if (
+            [username, email, password].some((field) => {
                 return field === '';
             })
         ) {
-            new ApiError(
-                402,
-                "all fields are required" 
-            )
+            throw new ApiError(
+                400,
+                "All fields are required!"
+            );
         }
 
-        const isEmailExist = await User.find({email:email}); 
-
-        if(
+        const isEmailExist = await User.find({ email: email });
+        console.log("isEmailExist: ", isEmailExist);
+        if (
             isEmailExist.length > 0
         ) {
-            new ApiError(
-                402,
-                " User already exists "
-            )
+            throw new ApiError(
+                409, // 409 Conflict if resource already exists
+                "User with this email already exists!"
+            );
         }
 
         const newUser = new User({
             username,
             email,
             password
-        })
+        });
+        console.log("newUser: ", newUser);
 
         const user = await newUser.save();
-
-        res.status(
-            200
-        ).json(
+        console.log("User saved: ", user);
+        res.status(201).json( // 201 Created
             new ApiResponse(
-                200,
-                "User Registered Successfully ",
-                user 
+                201,
+                "User Registered Successfully",
+                user
             )
-        )
+        );
     }
-)
+);
 
 const loginUser = asyncHandler(
-    async(req,res,next) => {
+    async (req, res, next) => {
         const { email, password } = req.body;
-        if(
-            [email, password].some((field)=>{
+
+        if (
+            [email, password].some((field) => {
                 return field === '';
             })
         ) {
-            new ApiError(
-                402,
-                "all fields are required ! "
-            )
+            throw new ApiError(
+                400,
+                "All fields are required!"
+            );
         }
 
-        const isUserExist = await User.find({email:email});
-
-        if(
-            !isUserExist 
+        const isUserExist = await User.findOne({ email: email }); // Use findOne for a single document
+        console.log("isUserExist: ", isUserExist);
+        if (
+            !isUserExist
         ) {
-            new ApiError(
+            throw new ApiError(
                 404,
-                " Please Register First " 
-            )
+                "User not found. Please register first."
+            );
         }
 
-        const comparePassword = await bcrypt.compare(password, isUserExist[0].password);
-
-        if(
+        const comparePassword = await bcrypt.compare(password, isUserExist.password);
+        console.log("Password match: ", comparePassword);
+        if (
             !comparePassword
         ) {
-            new ApiError(
-                402,
-                "Incorrect Password "
-            )
+            res.status(401).json(
+                {message: "Incorrect Password"}
+            );
         }
 
-        const token = await tokenGenerate(isUserExist[0]._id);
+        const token = await tokenGenerate(isUserExist._id);
+        console.log("Generated Token: ", token);
 
-        console.log("token ", token);
-
-        if(
-            !token 
+        if (
+            !token
         ) {
-            new ApiError(
-                402,
-                " token is not created "
-            )
+            throw new ApiError(
+                500, // 500 Internal Server Error if token generation fails
+                "Token could not be created."
+            );
         }
-        
+
         res.cookie('token', token, {
             httpOnly: true,
-            secure: true 
-        })
+            secure: process.env.NODE_ENV === 'production', // Set secure only in production
+            sameSite: 'Lax', // Or 'Strict' depending on your needs
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
 
-        res.status(
-            200
-        ).json(
-
+        res.status(200).json(
             new ApiResponse(
                 200,
-                " User LoggedIn Successfully ",
-                isUserExist
+                "User Logged In Successfully",
+                { user: isUserExist, token } // Return user object and token if needed
             )
-        )
-
+        );
     }
-)
+);
 
 const logoutUser = asyncHandler(
-    async(req,res,next) => {
+    async (req, res, next) => {
         res.clearCookie('token', {
             httpOnly: true,
-            secure: true
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Lax',
         });
-        res.status(
-            200
-        ).json(
+        res.status(200).json(
             new ApiResponse(
                 200,
-                " User LoggedOut Successfully " 
+                "User Logged Out Successfully"
             )
-        )
+        );
     }
-)
+);
+
+const getAllUsers = asyncHandler(
+    async (req, res, next) => {
+
+        const allUsers = await User.find({}).select('-password'); 
+        console.log("All users: ", allUsers);
+        if (!allUsers) {
+            throw new ApiError(500, "Could not retrieve users.");
+        }
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "All users retrieved successfully",
+                allUsers
+            )
+        );
+    }
+);
 
 export {
     registerUser,
     loginUser,
-    logoutUser 
-}
+    logoutUser,
+    getAllUsers 
+};

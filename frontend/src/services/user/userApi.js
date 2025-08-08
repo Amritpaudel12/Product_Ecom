@@ -1,4 +1,3 @@
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react' 
 
 const userApi = createApi({
@@ -27,10 +26,18 @@ const userApi = createApi({
                 url: '/logout',
                 method: 'POST'
             })
+        }),
+        getAllUsers: builder.query({ 
+            query: () => '/all',
         })
     })
 })
 
-export const { useRegisterUserMutation, useLoginUserMutation, useLogoutUserMutation } = userApi;
+export const { 
+    useRegisterUserMutation, 
+    useLoginUserMutation, 
+    useLogoutUserMutation,
+    useGetAllUsersQuery // Export the new hook
+} = userApi;
 
-export default userApi; 
+export default userApi;

@@ -4,7 +4,7 @@ export const asyncHandler = (fn) => {
         try {
             await fn(req,res,next);
         } catch (error) {
-            console.log(`Async Handler Error ${ error.message }`);
+            console.log(`Async Handler Error ${ error }`);
         }
     }
 }

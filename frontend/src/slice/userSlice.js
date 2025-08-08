@@ -1,15 +1,20 @@
-
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const getUser = () => {
-    let user = localStorage.getItem('user');
-    if(!user) {
+    let userString = localStorage.getItem('user');
+
+    if (userString === null) {
         return null;
     }
 
-    const actualUser = JSON.parse(user);
-
-    return actualUser;
+    try {
+        const actualUser = JSON.parse(userString);
+        return actualUser;
+    } catch (error) {
+        console.error("Error parsing user from localStorage:", error);
+        console.error("Value that caused error:", userString);
+        return null;
+    }
 }
 
 const initialState = {
@@ -23,14 +28,14 @@ const userSlice = createSlice({
         saveUser: (state, action) => {
             const user = action.payload;
             localStorage.setItem('user', JSON.stringify(user));
-            // state.user.push(action.payload);
+            state.user = user;
         },
-        removeUser: (state,action) => {
+        removeUser: (state) => {
             localStorage.removeItem('user');
-            state.user = '';
+            state.user = null;
         }
     }
-})
+});
 
 export const { saveUser, removeUser } = userSlice.actions;
 
