@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaFacebookF, FaInstagram, FaTwitter, FaEnvelope } from 'react-icons/fa'
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -12,14 +13,23 @@ function Footer() {
           </div>
           <div className="flex items-center gap-2 text-gray-400">
             <FaEnvelope className="text-lg" />
-            <span>productecom@gmail.com</span>
+            <span> <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=productecom@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              productecom@gmail.com
+            </a></span>
           </div>
         </div>
         <div className="flex flex-col gap-2 mt-6 md:mt-0">
-          <a href="#" className="hover:text-white transition">Home</a>
-          <a href="#" className="hover:text-white transition">Shop</a>
-          <a href="#" className="hover:text-white transition">About</a>
-          <a href="#" className="hover:text-white transition">Contact</a>
+          <Link to={'/'} className="hover:text-white transition">Home</Link>
+          <Link to={'/products'} className="hover:text-white transition">Shop</Link>
+          <Link to={'/about'} className="hover:text-white transition">About</Link>
+          <Link to={'/contact'} className="hover:text-white transition">Contact</Link>
+          <Link to={'/cart'} className="hover:text-white transition">Cart</Link>
+
         </div>
         <div className="hidden md:flex flex-col gap-2 text-gray-400 text-sm ml-8">
           <span className="font-semibold text-gray-200 mb-1">Customer Service</span>

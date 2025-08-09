@@ -99,12 +99,12 @@ function Topbar() {
         <HiMagnifyingGlass className="text-gray-500 text-xl mr-3" />
         <input
           type="text"
-          placeholder="Search anything..."
+          placeholder="Search users..."
           value={search}
           onChange={handleSearchChange} 
           className="bg-transparent outline-none flex-grow text-gray-800 placeholder-gray-500 text-lg"
         />
-        <button onClick={handleSearch}>search</button>
+        <button className='text-white font-bold h-10 hover:text-amber-100 px-4 bg-blue-800 rounded-lg hover:cursor-pointer' onClick={handleSearch}>Search</button>
       </div>
     </nav>
   );

@@ -59,7 +59,7 @@ function Navbar() {
   return (
     <nav className="h-20 flex justify-between items-center px-6 md:px-12 bg-gradient-to-r from-purple-700 to-indigo-800 text-white shadow-lg sticky top-0 z-50 rounded-b-lg">
       <div>
-        <h1 className="font-bold text-3xl tracking-wide font-sans text-white">Product_Ecom</h1>
+        <h1 className="font-bold text-3xl tracking-wide font-sans text-white"><Link to={'/'}>Ecommerce</Link></h1>
       </div>
       <ul className="flex items-center space-x-6">
         {sections.map((section, index) => (

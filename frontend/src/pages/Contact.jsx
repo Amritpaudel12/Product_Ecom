@@ -1,7 +1,36 @@
 import React from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import { useCreateContactMutation } from '../services/user/userApi';
 
 function Contact() {
+
+  const [createContact] = useCreateContactMutation();
+
+  const handleContact = (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData(e.target);
+      const contact = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message')
+      };
+      createContact(contact).unwrap()
+        .then(response => {
+          console.log("Contact submitted successfully:", response);
+          alert("Thank you for your message!");
+          e.target.reset(); // Reset the form after submission
+        })
+        .catch(error => {
+          console.error("Error submitting contact:", error);
+          alert("There was an error submitting your message. Please try again later.");
+        });
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      alert("An unexpected error occurred. Please try again later.");
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-100 flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden p-8 md:p-12 transform transition-all duration-500 hover:scale-[1.01]">
@@ -66,7 +95,7 @@ function Contact() {
 
         <div className="mt-12 p-8 bg-gray-50 rounded-xl shadow-inner">
           <h2 className="text-3xl font-bold text-center text-purple-700 mb-8">Send Us a Message</h2>
-          <form className="space-y-6">
+          <form onSubmit={handleContact} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-gray-700 text-sm font-medium mb-2">Name</label>
               <input

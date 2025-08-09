@@ -29,6 +29,13 @@ const userApi = createApi({
         }),
         getAllUsers: builder.query({ 
             query: () => '/all',
+        }),
+        createContact: builder.mutation({
+            query: (contact) => ({
+                url: '/contact/create',
+                method: 'POST',
+                body: contact
+            })
         })
     })
 })
@@ -37,7 +44,8 @@ export const {
     useRegisterUserMutation, 
     useLoginUserMutation, 
     useLogoutUserMutation,
-    useGetAllUsersQuery // Export the new hook
+    useGetAllUsersQuery,
+    useCreateContactMutation
 } = userApi;
 
 export default userApi;

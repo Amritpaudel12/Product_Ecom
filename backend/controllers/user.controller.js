@@ -1,3 +1,4 @@
+import Contact from "../models/contact.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -120,6 +121,24 @@ const loginUser = asyncHandler(
     }
 );
 
+const totalUsers = asyncHandler(
+    async (req, res, next) => { 
+        const usersCount = await User.find();
+        console.log("Total Users: ", usersCount);
+        if (usersCount === null) {
+            throw new ApiError(500, "Could not retrieve user count.");
+        }
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "Total users retrieved successfully",
+                { totalUsers: usersCount }
+            )
+        );
+    }
+)
+
 const logoutUser = asyncHandler(
     async (req, res, next) => {
         res.clearCookie('token', {
@@ -155,9 +174,55 @@ const getAllUsers = asyncHandler(
     }
 );
 
+const AddContact = asyncHandler(
+    async (req, res, next) => {
+        const { name, email, message } = req.body;
+
+        if (
+            [name, email, message].some((field) => {
+                return field === '';
+            })
+        ) {
+            throw new ApiError(
+                400,
+                "All fields are required!"
+            );
+        }
+
+        const isEmailExist = await Contact.find({ email: email });
+
+        if(
+            isEmailExist.length > 0
+        ) {
+            throw new ApiError(
+                409, // 409 Conflict if resource already exists
+                "Contact with this email already exists!"
+            );
+        }
+        const newContact = new Contact({
+            name,
+            email,
+            message
+        });
+
+        console.log("newContact: ", newContact);
+        const contact = await newContact.save();
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "Message sent successfully",
+                { name, email, message }
+            )
+        );
+    }
+);
+
 export {
     registerUser,
     loginUser,
     logoutUser,
-    getAllUsers 
+    getAllUsers,
+    totalUsers,
+    AddContact
 };

@@ -183,10 +183,53 @@ const deleteProduct = asyncHandler(
     }
 )
 
+const removeStockFromCart = asyncHandler(
+    async(req,res,next)=>{
+        const { id, quantity } = req.body;
+        if(
+            !id || !quantity
+        ) {
+            new ApiError(
+                402,
+                "id and quantity are required"
+            )
+        }
+
+        const product = await Product.findById(id);
+        if(
+            !product
+        ) {
+            new ApiError(
+                404,
+                "Product not found"
+            )
+        }
+
+        if(product.stock < quantity) {
+            new ApiError(
+                400,
+                "Insufficient stock"
+            )
+        }
+
+        product.stock -= quantity;
+        await product.save();
+
+        res.status(200).json(
+            new ApiResponse(
+                200,
+                "Stock updated successfully",
+                product
+            )
+        );
+    }
+)
+
 export {
     createProduct,
     getSpecificProduct,
     updateProduct,
     deleteProduct,
-    getAllProducts
+    getAllProducts,
+    removeStockFromCart
 }

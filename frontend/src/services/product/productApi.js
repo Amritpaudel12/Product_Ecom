@@ -1,5 +1,6 @@
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'  
+import { removeStockFromCart } from '../../../../backend/controllers/products.controller';
 
 const productApi = createApi({
     reducerPath: "productApi",
@@ -43,10 +44,17 @@ const productApi = createApi({
                 url: `/product/delete/${id}`,
                 method: 'DELETE' 
             })
+        }),
+        removeStockFromCart: builder.mutation({
+            query: ({id, quantity}) => ({
+                url: '/remove/stock',
+                method: 'POST',
+                body: { id, quantity }
+            })
         })
     })
 })
 
-export const { useCreateProductMutation, useGetProductsQuery, useGetSpecificProductQuery, useUpdateProductMutation, useDeleteProductMutation } = productApi;
+export const { useCreateProductMutation, useGetProductsQuery, useGetSpecificProductQuery, useUpdateProductMutation, useDeleteProductMutation, useRemoveStockFromCartMutation } = productApi;
 
 export default productApi;

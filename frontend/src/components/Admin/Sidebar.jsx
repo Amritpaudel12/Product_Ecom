@@ -31,7 +31,7 @@ function Sidebar() {
         </ul>
       </nav>
       <div className="p-6 border-t border-indigo-700 text-center text-sm text-indigo-200">
-        © 2025 Product_Ecom. All rights reserved.
+        © 2025 . All rights reserved.
       </div>
     </div>
   );

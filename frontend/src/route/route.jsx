@@ -18,6 +18,7 @@ import GetProducts from '../components/Admin/GetProducts'
 import Settings from '../components/Admin/Settings'
 import Users from '../components/Admin/Users'
 import Admin from '../components/Admin/Admin'
+import AdminOrder from '../components/AdminOrder'
 
 const router = createBrowserRouter([
     {
@@ -85,6 +86,12 @@ const router = createBrowserRouter([
     {
         path: '/admin/search',
         element: <AdminProtect><Admin /></AdminProtect>
+    },
+    {
+        path: '/admin/order',
+        element: <AdminProtect> 
+             <AdminOrder />
+        </AdminProtect>
     }
 ])
 
