@@ -1,16 +1,16 @@
 
-import React, { useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useGetProductsQuery, useRemoveStockFromCartMutation } from '../services/product/productApi';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../slice/cartSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-function Product() {
+import { ProductContext } from '../../ProductContext/index.jsx';
+function Product({newCartCount}) {
+     const { setCount } = useContext(ProductContext);
     const { data, error, isLoading, refetch } = useGetProductsQuery();
     const [removeStockFromCart] = useRemoveStockFromCartMutation();
     const dispatch = useDispatch();
-
     const Pants = useMemo(() => data?.data.filter(item => item.category === "Pants") || [], [data]);
     const Sweaters = useMemo(() => data?.data.filter(item => item.category === "Sweaters") || [], [data]);
     const Shirts = useMemo(() => data?.data.filter(item => item.category === "Shirts") || [], [data]);
@@ -33,7 +33,7 @@ function Product() {
     };
 
     const removeFromStock = async (_id, quantity) => {
-         try {
+        try {
             const response = await removeStockFromCart({ id: _id, quantity });
             // console.log("Stock removed response: ", response);
             if (response) {
@@ -51,6 +51,7 @@ function Product() {
 
     const handleAddToCart = async (_id, quantity, product) => {
         dispatch(addToCart(product));
+        newCartCount(cartCount + 1);
         notify();
 
         removeFromStock(_id, quantity);

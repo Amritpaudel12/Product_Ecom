@@ -52,9 +52,7 @@ function Dashboard() {
           <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-2xl p-8 lg:p-12">
             <div className="flex justify-between items-center mb-10">
               <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Admin Overview</h1>
-              <button className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-6 py-3 rounded-lg shadow-lg hover:from-purple-700 hover:to-indigo-800 transition duration-300 transform hover:scale-105">
-                New Report
-              </button>
+              
             </div>
 
             <p className="mt-6 text-lg text-gray-600 leading-relaxed">

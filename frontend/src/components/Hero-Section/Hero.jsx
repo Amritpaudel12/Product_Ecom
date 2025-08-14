@@ -29,7 +29,7 @@ function Hero() {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
             }`}
           >
-            Product Ecom
+            Ecommerce
           </h1>
           <p
             className={`font-light text-lg md:text-xl leading-relaxed text-gray-100 mb-10 drop-shadow-lg transition-all duration-1000 ease-out delay-200 ${

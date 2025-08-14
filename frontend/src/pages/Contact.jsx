@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { useCreateContactMutation } from '../services/user/userApi';
+import emailjs from '@emailjs/browser';
 
 function Contact() {
-
   const [createContact] = useCreateContactMutation();
 
-  const handleContact = (e) => {
+  useEffect(() => {
+    // Initialize EmailJS with your public key
+    emailjs.init({
+      publicKey: "3JmyFVoDRNus1RyQy",
+    });
+  }, []);
+
+  const handleContact = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData(e.target);
@@ -15,19 +22,32 @@ function Contact() {
         email: formData.get('email'),
         message: formData.get('message')
       };
-      createContact(contact).unwrap()
-        .then(response => {
-          console.log("Contact submitted successfully:", response);
-          alert("Thank you for your message!");
-          e.target.reset(); // Reset the form after submission
-        })
-        .catch(error => {
-          console.error("Error submitting contact:", error);
-          alert("There was an error submitting your message. Please try again later.");
-        });
+
+      // Add from_name to match the email template
+      const templateParams = {
+        from_name: formData.get('name'), // Using name as from_name
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message')
+      };
+
+      // Send email using EmailJS
+      await emailjs.sendForm(
+        'service_gp23vce',
+        'template_0i9yuub',
+        e.target,
+        templateParams
+      );
+
+      // Create contact in your backend
+      await createContact(contact).unwrap();
+      
+      console.log("Contact submitted successfully and email sent");
+      alert("Thank you for your message! We'll get back to you soon.");
+      e.target.reset(); // Reset the form after submission
     } catch (error) {
-      console.error("Unexpected error:", error);
-      alert("An unexpected error occurred. Please try again later.");
+      console.error("Error:", error);
+      alert("There was an error submitting your message. Please try again later.");
     }
   }
 
@@ -96,6 +116,7 @@ function Contact() {
         <div className="mt-12 p-8 bg-gray-50 rounded-xl shadow-inner">
           <h2 className="text-3xl font-bold text-center text-purple-700 mb-8">Send Us a Message</h2>
           <form onSubmit={handleContact} className="space-y-6">
+            <input type="hidden" name="from_name" id="from_name" />
             <div>
               <label htmlFor="name" className="block text-gray-700 text-sm font-medium mb-2">Name</label>
               <input

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeUser } from '../../slice/userSlice';
+import { clearCart, initializeUserCart } from '../../slice/cartSlice';
 import { useLogoutUserMutation } from '../../services/user/userApi';
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { ProductContext } from '../../../ProductContext/index.jsx';
+import { FaShoppingCart } from 'react-icons/fa';
+import { useEffect } from 'react';
+import defaultAvatar from '../../assets/amrit.jpg';
 const sections = [
   {
     path: '/',
@@ -29,6 +33,7 @@ const sections = [
 ];
 
 function Navbar() {
+   const { cartCount } = useContext(ProductContext);
   let { user, isAuthenticated } = useAuth0();
   const { logout } = useAuth0();
   let User = useSelector(state => state.user);
@@ -37,8 +42,15 @@ function Navbar() {
   const [logoutUser] = useLogoutUserMutation();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (User?.email) {
+      dispatch(initializeUserCart(User.email));
+    }
+  }, [User, dispatch]);
+
   const handleLogout = async () => {
     dispatch(removeUser());
+    dispatch(clearCart());  // Clear the cart when logging out
     try {
       await logoutUser();
       logout({ logoutParams: { returnTo: window.location.origin } });
@@ -51,7 +63,9 @@ function Navbar() {
     User = {
       name: user.name,
       email: user.email,
-      picture: user.picture
+      picture: user.picture  || defaultAvatar,
+      cartCount: user.cartCount || 0, // Ensure cartCount is set
+      // cartCount: JSON.parse(localStorage.getItem('cartCount')) || 0
     };
     localStorage.setItem('user', JSON.stringify(User));
   }
@@ -64,8 +78,20 @@ function Navbar() {
       <ul className="flex items-center space-x-6">
         {sections.map((section, index) => (
           <Link to={section.path} key={index}>
-            <li className="font-semibold text-lg hover:text-purple-200 transition duration-300 transform hover:scale-105">
-              {section.name}
+            <li className="font-semibold text-lg hover:text-purple-200 transition duration-300 transform hover:scale-105 flex items-center">
+              {section.path === '/cart' ? (
+                <div className="relative flex items-center">
+                  <FaShoppingCart className="text-xl mr-1" />
+                  <span>{section.name}</span>
+                  {cartCount > 0 && (
+                    <div className="absolute -top-3 -right-4 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full animate-pulse">
+                      {cartCount}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                section.name
+              )}
             </li>
           </Link>
         ))}
