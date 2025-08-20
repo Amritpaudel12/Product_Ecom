@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ProductContext } from '../../ProductContext/index.jsx';
 function Product({newCartCount}) {
-     const { setCount } = useContext(ProductContext);
+    const { setCount } = useContext(ProductContext);
     const { data, error, isLoading, refetch } = useGetProductsQuery();
     const [removeStockFromCart] = useRemoveStockFromCartMutation();
     const dispatch = useDispatch();
@@ -50,8 +50,8 @@ function Product({newCartCount}) {
     };
 
     const handleAddToCart = async (_id, quantity, product) => {
+        console.log(" add to cart product ", _id, quantity, product);
         dispatch(addToCart(product));
-        newCartCount(cartCount + 1);
         notify();
 
         removeFromStock(_id, quantity);

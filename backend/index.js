@@ -7,7 +7,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import UserRouter from './routes/user.route.js' 
 import productRouter from './routes/product.route.js'
-
+import KhaltiRouter from './routes/khalti.route.js';
+import paymentRoutes from './routes/payment.route.js';
 dotenv.config();
 
 const app = express();
@@ -31,5 +32,8 @@ connectDB()
     console.log(`Connection Error ${error.message}`);
 })
 
+
 app.use('/api/user', UserRouter);
 app.use('/api/product', productRouter);
+app.use('/api/khalti', KhaltiRouter);
+app.use('/api/payments', paymentRoutes);

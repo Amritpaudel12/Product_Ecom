@@ -26,26 +26,41 @@ const productSlice = createSlice({
             state.userEmail = userEmail;
             state.product = getUserCart(userEmail);
         },
+
         addToCart: (state, action) => {
             if (state.userEmail) {
-                state.product.push(action.payload);
+                const existing = state.product.find(p => p.id === action.payload.id);
+                if (existing) {
+                    existing.quantity = (existing.quantity || 1) + 1;
+                } else {
+                    state.product.push({ ...action.payload, quantity: 1 });
+                }
                 saveUserCart(state.userEmail, state.product);
             }
         },
+
         removeFromCart: (state, action) => {
             if (state.userEmail) {
-                state.product = state.product.filter(item => item.id !== action.payload.productId);
-                saveUserCart(state.userEmail, state.product);
+                const index = state.product.findIndex(p => p.id === action.payload.productId);
+                if (index !== -1) {
+                    if (state.product[index].quantity > 1) {
+                        state.product[index].quantity -= 1;
+                    } else {
+                        state.product.splice(index, 1);
+                    }
+                    saveUserCart(state.userEmail, state.product);
+                }
             }
         },
         clearCart: (state) => {
             if (state.userEmail) {
                 const allCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
-                delete allCarts[state.userEmail];
-                localStorage.setItem('userCarts', JSON.stringify(allCarts));
+                if (allCarts[state.userEmail]) {
+                    allCarts[state.userEmail].product = [];
+                    localStorage.setItem('userCarts', JSON.stringify(allCarts));
+                }
             }
             state.product = [];
-            state.userEmail = null;
         }
     }
 });

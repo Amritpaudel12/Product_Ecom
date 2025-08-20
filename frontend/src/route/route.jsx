@@ -19,6 +19,7 @@ import Settings from '../components/Admin/Settings'
 import Users from '../components/Admin/Users'
 import Admin from '../components/Admin/Admin'
 import AdminOrder from '../components/AdminOrder'
+import PaymentSuccess from '../components/PaymentSuccess'
 
 const router = createBrowserRouter([
     {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
                 path: '/login',
                 element: <Login />
             },
+            {
+                path:'/payment-success',
+                element:<PaymentSuccess />
+            }
         ],
     },
     {

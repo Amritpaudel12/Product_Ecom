@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { saveUser, removeUser } from '../slice/userSlice';
 import { useAuth0 } from "@auth0/auth0-react";
 import { IoLogoGoogle } from "react-icons/io";
-import { router } from '../route/route';
-import { useNavigate } from 'react-router-dom';
+import { router } from '../route/route'; 
+import { useNavigate } from 'react-router-dom'; 
 
 function Login() {
     const dispatch = useDispatch();
@@ -70,7 +70,6 @@ function Login() {
                 }
 
             } else {
-                // alert(`Login Failed: ${response.error?.data?.message || 'Unknown error'}`);
                 console.error("Login Error: ", response.error);
             }
         } catch (error) {
