@@ -114,7 +114,7 @@ function Categories() {
               <p className="text-gray-600 text-center mb-4 leading-relaxed">
                 {product.description.slice(0, 100)}...
               </p>
-              <p className="text-xl font-semibold text-gray-900 mb-6">${product.price.toFixed(2)}</p>
+              <p className="text-xl font-semibold text-gray-900 mb-6">RS.{product.price.toFixed(2)}</p>
               <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-700 text-white font-bold rounded-full shadow-xl hover:from-purple-700 hover:to-indigo-800 transition transform hover:scale-105 active:scale-95">
                 <Link to={`/single-products/${product._id}`}>Explore</Link>
               </button>

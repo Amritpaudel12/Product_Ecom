@@ -93,7 +93,7 @@ function Product({newCartCount}) {
                             </p>
 
                             <p className='mt-3 text-lg font-bold text-green-600'>
-                                ${parseFloat(product.price).toFixed(2)}
+                                RS. {parseFloat(product.price).toFixed(2)}
                             </p>
 
                             <button

@@ -130,7 +130,7 @@ function SingleProducts() {
                                     <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 text-center border border-gray-200/50 hover:bg-white/90 transition-all duration-300">
                                         <Truck className="w-8 h-8 text-green-600 mx-auto mb-2" />
                                         <p className="text-sm font-semibold text-gray-800">Free Shipping</p>
-                                        <p className="text-xs text-gray-600">On orders over $50</p>
+                                        <p className="text-xs text-gray-600">On orders over Rs.50</p>
                                     </div>
                                     <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 text-center border border-gray-200/50 hover:bg-white/90 transition-all duration-300">
                                         <Shield className="w-8 h-8 text-blue-600 mx-auto mb-2" />
@@ -173,7 +173,7 @@ function SingleProducts() {
                                 <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-6 border border-blue-100">
                                     <div className="flex items-baseline space-x-4">
                                         <span className="text-4xl font-bold text-gray-900">
-                                            ${typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
+                                            Rs. {typeof product.price === 'number' ? product.price.toFixed(2) : product.price}
                                         </span>
                                         <span className="px-3 py-1 bg-green-500 text-white text-sm font-bold rounded-full">
                                             Best Price
