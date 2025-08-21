@@ -3,6 +3,9 @@ import mongoose,{ Schema, model } from 'mongoose'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'   
 
+console.log("jwt secret key ", process.env.JWT_SECRET_KEY)
+console.log("jwt secret key ", process.env.JWT_EXPIRY)
+
 const userSchema = new Schema({
     username: {
         type: String,

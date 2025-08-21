@@ -1,15 +1,13 @@
-// import KhaltiCheckout from "khalti-checkout-web";
+
 import myKey from "./KhaltiKey";
 import axios from 'axios'
 let config = {
-    // replace this key with yours
     "publicKey": myKey.publicTestKey,
     "productIdentity": "1234567890",
     "productName": "Flower E-com",
     "productUrl": "http://localhost:5173/",
     "eventHandler": {
         onSuccess(payload) {
-            // hit merchant api for initiating verfication
             console.log(payload);
             let data = {
                 "token": payload.token,
@@ -30,9 +28,7 @@ let config = {
                 });
 
         },
-        // onError handler is optional
         onError(error) {
-            // handle errors
             console.log(error);
         },
         onClose() {

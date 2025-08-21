@@ -1,4 +1,4 @@
-// In your Admin.jsx or the component managing the state
+
 import React,{ useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Topbar from './Topbar';
