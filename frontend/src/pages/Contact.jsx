@@ -64,15 +64,15 @@ function Contact() {
             <div className="space-y-6">
               <div className="flex items-center text-gray-800 text-lg">
                 <FaEnvelope className="text-purple-600 mr-4 text-2xl" />
-                <span>info@productecom.com</span>
+                <span>info@shophub.com</span>
               </div>
               <div className="flex items-center text-gray-800 text-lg">
                 <FaPhone className="text-purple-600 mr-4 text-2xl" />
-                <span>+1 (234) 567-8900</span>
+                <span>+977 9865846429</span>
               </div>
               <div className="flex items-center text-gray-800 text-lg">
                 <FaMapMarkerAlt className="text-purple-600 mr-4 text-2xl" />
-                <span>123 Fashion Ave, Style City, SC 12345</span>
+                <span>New Baneshwor, Kathmandu</span>
               </div>
             </div>
           </div>
@@ -120,6 +120,7 @@ function Contact() {
                 name="name"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200"
                 placeholder="Your Name"
+                required
               />
             </div>
             <div>
@@ -130,6 +131,7 @@ function Contact() {
                 name="email"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200"
                 placeholder="your.email@example.com"
+                required
               />
             </div>
             <div>
@@ -140,6 +142,7 @@ function Contact() {
                 rows="5"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-200 resize-y"
                 placeholder="Your message to us..."
+                required
               ></textarea>
             </div>
             <div className="text-center">

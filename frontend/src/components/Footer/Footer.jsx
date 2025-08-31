@@ -8,7 +8,7 @@ function Footer() {
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-6">
         <div className="flex flex-col md:flex-col items-center gap-6">
           <div className="text-2xl font-bold flex items-center gap-2">
-            Product Ecom
+             ShopHub
             <span className="text-gray-400 text-base ml-2">&copy; {new Date().getFullYear()}</span>
           </div>
           <div className="flex items-center gap-2 text-gray-400">
@@ -19,7 +19,7 @@ function Footer() {
               rel="noopener noreferrer"
               className="hover:underline"
             >
-              productecom@gmail.com
+              shophub@gmail.com
             </a></span>
           </div>
         </div>
@@ -32,25 +32,18 @@ function Footer() {
 
         </div>
         <div className="hidden md:flex flex-col gap-2 text-gray-400 text-sm ml-8">
-          <span className="font-semibold text-gray-200 mb-1">Customer Service</span>
-          <span>FAQ</span>
-          <span>Returns & Exchanges</span>
-          <span>Shipping Info</span>
-          <span>Privacy Policy</span>
-        </div>
-        <div className="hidden md:flex flex-col gap-2 text-gray-400 text-sm ml-8">
           <span className="font-semibold text-gray-200 mb-1">Contact Us</span>
-          <span>+1 234 567 8901</span>
-          <span>123 Market Street, City, Country</span>
+          <span>+977 9865848429</span>
+          <span>New Baneshwor, Kathmandu</span>
         </div>
         <div className="flex gap-4 mt-6 md:mt-0 md:flex-col">
-          <a href="#" aria-label="Facebook" className="hover:text-blue-500 transition">
+          <a href="https://facebook.com" aria-label="Facebook" className="hover:text-blue-500 transition">
             <FaFacebookF size={22} />
           </a>
-          <a href="#" aria-label="Instagram" className="hover:text-pink-400 transition">
+          <a href="https://instagram.com" aria-label="Instagram" className="hover:text-pink-400 transition">
             <FaInstagram size={22} />
           </a>
-          <a href="#" aria-label="Twitter" className="hover:text-blue-400 transition">
+          <a href="https://x.com/" aria-label="Twitter" className="hover:text-blue-400 transition">
             <FaTwitter size={22} />
           </a>
         </div>
