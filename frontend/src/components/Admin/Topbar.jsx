@@ -24,7 +24,7 @@ function Topbar() {
   return (
     <nav className="bg-white shadow-md p-4 flex items-center justify-between sticky top-0 z-10 rounded-b-xl">
       <div className="text-3xl font-extrabold text-indigo-700 tracking-wide select-none">
-        Product<span className="text-purple-600">_Ecom</span>
+        Shop<span className="text-purple-600">Hub</span>
       </div>
       <div className="relative flex items-center bg-gray-100 rounded-lg px-4 py-2 w-full max-w-md shadow-inner">
         <HiMagnifyingGlass className="text-gray-500 text-xl mr-3" />
