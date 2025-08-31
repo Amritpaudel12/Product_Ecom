@@ -72,11 +72,11 @@ function Contact() {
               </div>
               <div className="flex items-center text-gray-800 text-lg">
                 <FaPhone className="text-purple-600 mr-4 text-2xl" />
-                <span>+1 (234) 567-8900</span>
+                <span></span>
               </div>
               <div className="flex items-center text-gray-800 text-lg">
                 <FaMapMarkerAlt className="text-purple-600 mr-4 text-2xl" />
-                <span>123 Fashion Ave, Style City, SC 12345</span>
+                <span>New Baneshwor, Kathmandu</span>
               </div>
             </div>
           </div>
