@@ -22,7 +22,7 @@ function AdminLogin() {
         e.preventDefault();
         console.log("Admin Login Data:", loginData);
 
-        const ADMIN_EMAIL = 'Amrit Paudel';
+        const ADMIN_EMAIL = 'admin';
         const ADMIN_PASSWORD = 'amrit123';
 
         if (loginData.email === ADMIN_EMAIL && loginData.password === ADMIN_PASSWORD) {

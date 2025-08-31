@@ -24,11 +24,9 @@ function Dashboard() {
 
   const totalStockAmount = localStorage.getItem('cart');
   const parsedCart = totalStockAmount ? JSON.parse(totalStockAmount) : { product: [] };
-  // console.log("cart details ", parsedCart);
 
   console.log("total stock amount ", totalStockAmount);
   const productsInCart = parsedCart.product || [];
-  // console.log("products in cart ", productsInCart);
 
   const totalAmount = Array.isArray(data?.data) && data.data.length > 0
     ? productsInCart.reduce((total, item) => total + (item.price || 0), 0)
@@ -108,7 +106,6 @@ function Dashboard() {
               <p className="text-5xl font-bold text-gray-900">{Math.round(totalAmount)}</p>
               <p className="text-red-500 mt-2 text-md">Requires immediate attention</p>
             </div>
-          {/* </div> */}
 
           <div className="mt-12 border-t border-gray-200 pt-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">Quick Actions</h2>

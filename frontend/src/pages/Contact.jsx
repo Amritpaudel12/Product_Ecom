@@ -7,7 +7,6 @@ function Contact() {
   const [createContact] = useCreateContactMutation();
 
   useEffect(() => {
-    // Initialize EmailJS with your public key
     emailjs.init({
       publicKey: "3JmyFVoDRNus1RyQy",
     });
@@ -23,15 +22,13 @@ function Contact() {
         message: formData.get('message')
       };
 
-      // Add from_name to match the email template
       const templateParams = {
-        from_name: formData.get('name'), // Using name as from_name
+        from_name: formData.get('name'), 
         name: formData.get('name'),
         email: formData.get('email'),
         message: formData.get('message')
       };
 
-      // Send email using EmailJS
       await emailjs.sendForm(
         'service_gp23vce',
         'template_0i9yuub',
@@ -39,7 +36,6 @@ function Contact() {
         templateParams
       );
 
-      // Create contact in your backend
       await createContact(contact).unwrap();
       
       console.log("Contact submitted successfully and email sent");
@@ -81,7 +77,6 @@ function Contact() {
             </div>
           </div>
 
-          {/* Social Media Links */}
           <div className="flex flex-col items-center text-center p-6 bg-purple-50 rounded-xl shadow-md">
             <h2 className="text-3xl font-bold text-purple-700 mb-6">Connect With Us</h2>
             <div className="flex space-x-6">

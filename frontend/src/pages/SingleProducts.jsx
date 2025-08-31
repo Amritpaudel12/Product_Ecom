@@ -65,7 +65,6 @@ function SingleProducts() {
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
             {data && (
                 <>
-                    {/* Breadcrumb Navigation */}
                     <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 sticky top-0 z-10">
                         <div className="max-w-7xl mx-auto px-6 py-4">
                             <div className="flex items-center text-sm text-gray-600 font-medium">
@@ -84,13 +83,11 @@ function SingleProducts() {
 
                     <div className="max-w-7xl mx-auto px-6 py-12">
                         <div className="grid grid-cols-1 xl:grid-cols-2 gap-16">
-                            {/* Product Image Section */}
                             <div className="space-y-6">
                                 <div className="relative group">
                                     <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
                                         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                                        {/* Image Loading State */}
                                         {!imageLoaded && (
                                             <div className="relative z-10 w-full h-96 bg-gray-100 rounded-2xl animate-pulse flex items-center justify-center">
                                                 <Loader className="w-8 h-8 text-gray-400 animate-spin" />
@@ -109,7 +106,6 @@ function SingleProducts() {
                                             }}
                                         />
 
-                                        {/* Action Buttons */}
                                         <div className="absolute top-6 right-6 flex flex-col space-y-3">
                                             <button
                                                 onClick={() => setIsWishlisted(!isWishlisted)}
@@ -125,7 +121,6 @@ function SingleProducts() {
                                     </div>
                                 </div>
 
-                                {/* Trust Badges */}
                                 <div className="grid grid-cols-3 gap-4">
                                     <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 text-center border border-gray-200/50 hover:bg-white/90 transition-all duration-300">
                                         <Truck className="w-8 h-8 text-green-600 mx-auto mb-2" />
@@ -145,9 +140,7 @@ function SingleProducts() {
                                 </div>
                             </div>
 
-                            {/* Product Information Section */}
                             <div className="space-y-8">
-                                {/* Header */}
                                 <div className="space-y-4">
                                     <div className="inline-block">
                                         <span className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold rounded-full shadow-lg">
@@ -158,7 +151,6 @@ function SingleProducts() {
                                         {product.name}
                                     </h1>
 
-                                    {/* Rating */}
                                     <div className="flex items-center space-x-4">
                                         <div className="flex items-center space-x-1">
                                             {[...Array(5)].map((_, i) => (
@@ -168,8 +160,6 @@ function SingleProducts() {
                                         <span className="text-gray-600 font-medium">(4.8) • 1,247 reviews</span>
                                     </div>
                                 </div>
-
-                                {/* Price Section */}
                                 <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-6 border border-blue-100">
                                     <div className="flex items-baseline space-x-4">
                                         <span className="text-4xl font-bold text-gray-900">
@@ -184,16 +174,12 @@ function SingleProducts() {
                                         In Stock - Ready to Ship
                                     </p>
                                 </div>
-
-                                {/* Description */}
                                 <div className="bg-white rounded-3xl p-6 shadow-lg border border-gray-100">
                                     <h3 className="text-xl font-bold text-gray-900 mb-4">Product Description</h3>
                                     <p className="text-gray-700 leading-relaxed text-lg">
                                         {product.description}
                                     </p>
                                 </div>
-
-                                {/* Add to Cart Section */}
                                 <div className="space-y-6">
                                     <button
                                         onClick={() => handleAddToCart({
@@ -213,8 +199,6 @@ function SingleProducts() {
                                         </div>
                                     </button>
                                 </div>
-
-                                {/* Product Features */}
                                 <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-6 border border-gray-200">
                                     <h3 className="text-lg font-bold text-gray-900 mb-4">Why Choose This Product?</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

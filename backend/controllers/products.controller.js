@@ -6,7 +6,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 const createProduct = asyncHandler(
     async (req,res,next) => {
         const { name, description, price, category, size, color, stock, image } = req.body;
-        console.log("req body ", req.body)
         if(
             [name, description, price, category, size, color, stock, image].some((field)=>{
                 return field === '';
@@ -90,9 +89,6 @@ const getAllProducts = asyncHandler(
                 "no products found "
             )
         }
-
-
-        console.log("products ", allProducts)
 
         res.status(
             200

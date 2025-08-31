@@ -32,7 +32,7 @@ const registerUser = asyncHandler(
             isEmailExist.length > 0
         ) {
             throw new ApiError(
-                409, // 409 Conflict if resource already exists
+                409, 
                 "User with this email already exists!"
             );
         }
@@ -71,7 +71,7 @@ const loginUser = asyncHandler(
             );
         }
 
-        const isUserExist = await User.findOne({ email: email }); // Use findOne for a single document
+        const isUserExist = await User.findOne({ email: email }); 
         console.log("isUserExist: ", isUserExist);
         if (
             !isUserExist
@@ -99,23 +99,23 @@ const loginUser = asyncHandler(
             !token
         ) {
             throw new ApiError(
-                500, // 500 Internal Server Error if token generation fails
+                500, 
                 "Token could not be created."
             );
         }
 
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Set secure only in production
-            sameSite: 'Lax', // Or 'Strict' depending on your needs
-            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'Lax', 
+            maxAge: 7 * 24 * 60 * 60 * 1000 
         });
 
         res.status(200).json(
             new ApiResponse(
                 200,
                 "User Logged In Successfully",
-                { user: isUserExist, token } // Return user object and token if needed
+                { user: isUserExist, token } 
             )
         );
     }
@@ -195,7 +195,7 @@ const AddContact = asyncHandler(
             isEmailExist.length > 0
         ) {
             throw new ApiError(
-                409, // 409 Conflict if resource already exists
+                409, 
                 "Contact with this email already exists!"
             );
         }

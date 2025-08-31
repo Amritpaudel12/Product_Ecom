@@ -35,7 +35,6 @@ function About() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 py-20 px-4 sm:px-6 lg:px-12">
-      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,7 +49,6 @@ function About() {
         </p>
       </motion.div>
 
-      {/* Stats Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl w-full mb-20">
         {stats.map((stat, index) => (
           <motion.div
@@ -67,7 +65,6 @@ function About() {
         ))}
       </div>
 
-      {/* Mission & Vision */}
       <div className="max-w-4xl w-full mb-20">
         <motion.div
           initial={{ opacity: 0 }}
@@ -90,7 +87,6 @@ function About() {
         </motion.div>
       </div>
 
-      {/* Team Section */}
       <div className="max-w-6xl w-full mb-20">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Meet Our Team</h2>
         <div className="grid md:grid-cols-3 gap-8">
@@ -112,7 +108,6 @@ function About() {
         </div>
       </div>
 
-      {/* Timeline */}
       <div className="max-w-4xl w-full mb-20">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Our Journey</h2>
         <div className="space-y-8">
@@ -135,7 +130,6 @@ function About() {
         </div>
       </div>
 
-      {/* Testimonials */}
       <div className="max-w-4xl w-full mb-20">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">What Our Customers Say</h2>
         <div className="relative">

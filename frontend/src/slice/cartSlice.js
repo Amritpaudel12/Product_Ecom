@@ -1,7 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const getUserCart = (userEmail) => {
+export const getUserCart = (userEmail) => {
     const allCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
     return allCarts[userEmail]?.product || [];
 };
@@ -46,12 +46,43 @@ const productSlice = createSlice({
                     if (state.product[index].quantity > 1) {
                         state.product[index].quantity -= 1;
                     } else {
-                        state.product.splice(index, 1);
+                        state.product.splice(index, 1); 
                     }
                     saveUserCart(state.userEmail, state.product);
                 }
             }
         },
+
+        removeItemFromCart: (state, action) => {
+            if (state.userEmail) {
+                state.product = state.product.filter(p => p.id !== action.payload.productId);
+                saveUserCart(state.userEmail, state.product);
+            }
+        },
+
+        incrementQuantity: (state, action) => {
+            if (state.userEmail) {
+                const item = state.product.find(p => p.id === action.payload.productId);
+                if (item) {
+                    item.quantity += 1;
+                    saveUserCart(state.userEmail, state.product);
+                }
+            }
+        },
+
+        decrementQuantity: (state, action) => {
+            if (state.userEmail) {
+                const item = state.product.find(p => p.id === action.payload.productId);
+                if (item && item.quantity > 1) {
+                    item.quantity -= 1;
+                    saveUserCart(state.userEmail, state.product);
+                } else if (item && item.quantity === 1) {
+                    state.product = state.product.filter(p => p.id !== action.payload.productId);
+                    saveUserCart(state.userEmail, state.product);
+                }
+            }
+        },
+
         clearCart: (state) => {
             if (state.userEmail) {
                 const allCarts = JSON.parse(localStorage.getItem('userCarts')) || {};
@@ -65,5 +96,14 @@ const productSlice = createSlice({
     }
 });
 
-export const { addToCart, removeFromCart, clearCart, initializeUserCart } = productSlice.actions;
+export const {
+    addToCart,
+    removeFromCart, 
+    removeItemFromCart, 
+    incrementQuantity,
+    decrementQuantity,
+    clearCart,
+    initializeUserCart
+} = productSlice.actions;
+
 export default productSlice.reducer;

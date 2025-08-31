@@ -1,6 +1,5 @@
 
 import { createBrowserRouter } from 'react-router-dom'
-// import Navbar from '../components/Navbar/Navbar'
 import Home from '../pages/Home'
 import About from '../pages/About'
 import Contact from '../pages/Contact'
@@ -20,6 +19,7 @@ import Users from '../components/Admin/Users'
 import Admin from '../components/Admin/Admin'
 import AdminOrder from '../components/AdminOrder'
 import PaymentSuccess from '../components/PaymentSuccess'
+import Profile from '../components/Profile'
 
 const router = createBrowserRouter([
     {
@@ -65,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path:'/payment-success',
                 element:<PaymentSuccess />
+            },
+            {
+                path: '/profile',
+                element: <Profile />
             }
         ],
     },
